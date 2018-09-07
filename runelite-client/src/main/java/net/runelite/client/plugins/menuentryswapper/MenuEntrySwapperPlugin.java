@@ -490,6 +490,14 @@ public class MenuEntrySwapperPlugin extends Plugin
 		{
 			swap("empty", option, target, true);
 		}
+        else if (config.swapWithdraw() && option.equals("withdraw-1"))
+        {
+            swap("withdraw-x", option, target, true);
+        }
+		else if (config.swapDeposit() && option.equals("deposit-1"))
+        {
+            swap("deposit-all", option, target, true);
+        }
 	}
 
 	@Subscribe
@@ -550,6 +558,22 @@ public class MenuEntrySwapperPlugin extends Plugin
 
 		int idxA = searchIndex(entries, optionA, target, strict);
 		int idxB = searchIndex(entries, optionB, target, strict);
+
+		if (optionA.equals("withdraw-x") || optionA.equals("deposit-all"))
+        {
+            if (optionA.equals("withdraw-x"))
+            {
+                idxA++;
+            }
+            else
+            {
+                idxA += 2;
+            }
+
+            if (entries.length == 9) {
+                idxA--;
+            }
+        }
 
 		if (idxA >= 0 && idxB >= 0)
 		{
