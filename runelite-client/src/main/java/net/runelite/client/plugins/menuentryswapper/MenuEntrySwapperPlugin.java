@@ -560,20 +560,20 @@ public class MenuEntrySwapperPlugin extends Plugin
 		int idxB = searchIndex(entries, optionB, target, strict);
 
 		if (optionA.equals("withdraw-x") || optionA.equals("deposit-all"))
-        {
-            if (optionA.equals("withdraw-x"))
-            {
-                idxA++;
-            }
-            else
-            {
-                idxA += 2;
-            }
+		{
+			if (optionA.equals("withdraw-x"))
+			{
+				idxA++;
+			}
+			else
+			{
+				idxA += 2;
+			}
 
-            if (entries.length == 9) {
-                idxA--;
-            }
-        }
+			if (entries.length == 9) {
+				idxA--;
+			}
+		}
 
 		if (idxA >= 0 && idxB >= 0)
 		{
