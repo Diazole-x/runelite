@@ -249,7 +249,7 @@ public interface MenuEntrySwapperConfig extends Config
     default boolean swapWithdraw() { return false; }
 
     @ConfigItem(
-        position = 20,
+		position = 20,
         keyName = "swapDeposit",
         name = "Deposit X",
         description = "Swap Deposit-1 with Deposit-X on inventory items"
