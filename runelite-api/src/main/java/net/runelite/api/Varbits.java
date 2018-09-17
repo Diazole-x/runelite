@@ -212,6 +212,12 @@ public enum Varbits
 	IN_GAME_BA(3923),
 
 	/**
+	 * Fishing Trawler
+	 * FISHING_TRAWLER_ACTIVITY Expected values: 0-255
+	 */
+	FISHING_TRAWLER_ACTIVITY(3377),
+
+	/**
 	 * Blast Furnace Bar Dispenser
 	 *
 	 * These are the expected values:
@@ -346,6 +352,7 @@ public enum Varbits
 	DAILY_HERB_BOX(3961),
 	DAILY_STAVES(4539),
 	DAILY_ESSENCE(4547),
+	DAILY_RUNES(4540),
 
 	/**
 	 * Fairy Ring
