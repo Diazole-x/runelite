@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Cameron <https://github.com/noremac201>
+ * Copyright (c) 2018, Jacob M <https://github.com/jacoblairm>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,36 +24,51 @@
  */
 package net.runelite.client.plugins.barbarianassault;
 
-import lombok.Getter;
-import net.runelite.api.widgets.WidgetInfo;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-public enum Role
+class GameTimer
 {
-	ATTACKER(WidgetInfo.BA_ATK_LISTEN_TEXT, WidgetInfo.BA_ATK_CALL_TEXT, WidgetInfo.BA_ATK_ROLE_TEXT, WidgetInfo.BA_ATK_ROLE_SPRITE),
-	DEFENDER(WidgetInfo.BA_DEF_LISTEN_TEXT, WidgetInfo.BA_DEF_CALL_TEXT, WidgetInfo.BA_DEF_ROLE_TEXT, WidgetInfo.BA_DEF_ROLE_SPRITE),
-	COLLECTOR(WidgetInfo.BA_COLL_LISTEN_TEXT, WidgetInfo.BA_COLL_CALL_TEXT, WidgetInfo.BA_COLL_ROLE_TEXT, WidgetInfo.BA_COLL_ROLE_SPRITE),
-	HEALER(WidgetInfo.BA_HEAL_LISTEN_TEXT, WidgetInfo.BA_HEAL_CALL_TEXT, WidgetInfo.BA_HEAL_ROLE_TEXT, WidgetInfo.BA_HEAL_ROLE_SPRITE);
+	final private Instant startTime = Instant.now();
+	private Instant prevWave = startTime;
 
-	@Getter
-	private final WidgetInfo listen;
-	@Getter
-	private final WidgetInfo call;
-	@Getter
-	private final WidgetInfo roleText;
-	@Getter
-	private final WidgetInfo roleSprite;
-
-	Role(WidgetInfo listen, WidgetInfo call, WidgetInfo role, WidgetInfo roleSprite)
+	String getTime(boolean waveTime)
 	{
-		this.listen = listen;
-		this.call = call;
-		this.roleText = role;
-		this.roleSprite = roleSprite;
+		final Instant now = Instant.now();
+		final Duration elapsed;
+
+		if (waveTime)
+		{
+			elapsed = Duration.between(prevWave, now);
+		}
+		else
+		{
+			elapsed = Duration.between(startTime, now).minusMillis(600);
+		}
+
+		return formatTime(LocalTime.ofSecondOfDay(elapsed.getSeconds()));
 	}
 
-	@Override
-	public String toString()
+	void setWaveStartTime()
 	{
-		return name();
+		prevWave = Instant.now();
+	}
+
+	private static String formatTime(LocalTime time)
+	{
+		if (time.getHour() > 0)
+		{
+			return time.format(DateTimeFormatter.ofPattern("HH:mm"));
+		}
+		else if (time.getMinute() > 9)
+		{
+			return time.format(DateTimeFormatter.ofPattern("mm:ss"));
+		}
+		else
+		{
+			return time.format(DateTimeFormatter.ofPattern("m:ss"));
+		}
 	}
 }

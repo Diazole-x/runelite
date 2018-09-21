@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2018, Cameron <https://github.com/noremac201>
+ * Copyright (c) 2018, terminatusx <jbfleischman@gmail.com>
+ * Copyright (c) 2018, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,38 +23,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.barbarianassault;
+package net.runelite.client.plugins.wintertodt;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.runelite.api.widgets.WidgetInfo;
 
-public enum Role
+@AllArgsConstructor
+@Getter
+enum WintertodtActivity
 {
-	ATTACKER(WidgetInfo.BA_ATK_LISTEN_TEXT, WidgetInfo.BA_ATK_CALL_TEXT, WidgetInfo.BA_ATK_ROLE_TEXT, WidgetInfo.BA_ATK_ROLE_SPRITE),
-	DEFENDER(WidgetInfo.BA_DEF_LISTEN_TEXT, WidgetInfo.BA_DEF_CALL_TEXT, WidgetInfo.BA_DEF_ROLE_TEXT, WidgetInfo.BA_DEF_ROLE_SPRITE),
-	COLLECTOR(WidgetInfo.BA_COLL_LISTEN_TEXT, WidgetInfo.BA_COLL_CALL_TEXT, WidgetInfo.BA_COLL_ROLE_TEXT, WidgetInfo.BA_COLL_ROLE_SPRITE),
-	HEALER(WidgetInfo.BA_HEAL_LISTEN_TEXT, WidgetInfo.BA_HEAL_CALL_TEXT, WidgetInfo.BA_HEAL_ROLE_TEXT, WidgetInfo.BA_HEAL_ROLE_SPRITE);
+	IDLE("IDLE"),
+	WOODCUTTING("Woodcutting"),
+	FLETCHING("Fletching"),
+	FEEDING_BRAZIER("Feeding"),
+	FIXING_BRAZIER("Fixing"),
+	LIGHTING_BRAZIER("Lighting");
 
-	@Getter
-	private final WidgetInfo listen;
-	@Getter
-	private final WidgetInfo call;
-	@Getter
-	private final WidgetInfo roleText;
-	@Getter
-	private final WidgetInfo roleSprite;
-
-	Role(WidgetInfo listen, WidgetInfo call, WidgetInfo role, WidgetInfo roleSprite)
-	{
-		this.listen = listen;
-		this.call = call;
-		this.roleText = role;
-		this.roleSprite = roleSprite;
-	}
-
-	@Override
-	public String toString()
-	{
-		return name();
-	}
+	private final String actionString;
 }

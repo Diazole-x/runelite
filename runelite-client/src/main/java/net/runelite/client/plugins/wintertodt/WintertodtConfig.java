@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2018, Cameron <https://github.com/noremac201>
+ * Copyright (c) 2018, terminatusx <jbfleischman@gmail.com>
+ * Copyright (c) 2018, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,38 +23,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.barbarianassault;
+package net.runelite.client.plugins.wintertodt;
 
-import lombok.Getter;
-import net.runelite.api.widgets.WidgetInfo;
+import java.awt.Color;
+import net.runelite.client.config.Config;
+import net.runelite.client.config.ConfigGroup;
+import net.runelite.client.config.ConfigItem;
+import net.runelite.client.plugins.wintertodt.config.WintertodtNotifyMode;
 
-public enum Role
+@ConfigGroup("wintertodt")
+public interface WintertodtConfig extends Config
 {
-	ATTACKER(WidgetInfo.BA_ATK_LISTEN_TEXT, WidgetInfo.BA_ATK_CALL_TEXT, WidgetInfo.BA_ATK_ROLE_TEXT, WidgetInfo.BA_ATK_ROLE_SPRITE),
-	DEFENDER(WidgetInfo.BA_DEF_LISTEN_TEXT, WidgetInfo.BA_DEF_CALL_TEXT, WidgetInfo.BA_DEF_ROLE_TEXT, WidgetInfo.BA_DEF_ROLE_SPRITE),
-	COLLECTOR(WidgetInfo.BA_COLL_LISTEN_TEXT, WidgetInfo.BA_COLL_CALL_TEXT, WidgetInfo.BA_COLL_ROLE_TEXT, WidgetInfo.BA_COLL_ROLE_SPRITE),
-	HEALER(WidgetInfo.BA_HEAL_LISTEN_TEXT, WidgetInfo.BA_HEAL_CALL_TEXT, WidgetInfo.BA_HEAL_ROLE_TEXT, WidgetInfo.BA_HEAL_ROLE_SPRITE);
-
-	@Getter
-	private final WidgetInfo listen;
-	@Getter
-	private final WidgetInfo call;
-	@Getter
-	private final WidgetInfo roleText;
-	@Getter
-	private final WidgetInfo roleSprite;
-
-	Role(WidgetInfo listen, WidgetInfo call, WidgetInfo role, WidgetInfo roleSprite)
+	@ConfigItem(
+		position = 1,
+		keyName = "notifyCondition",
+		name = "Notify When",
+		description = "Configures when to send notifications"
+	)
+	default WintertodtNotifyMode notifyCondition()
 	{
-		this.listen = listen;
-		this.call = call;
-		this.roleText = role;
-		this.roleSprite = roleSprite;
+		return WintertodtNotifyMode.ONLY_WHEN_INTERRUPTED;
 	}
 
-	@Override
-	public String toString()
+	@ConfigItem(
+		position = 2,
+		keyName = "damageNotificationColor",
+		name = "Damage Notification Color",
+		description = "Color of damage notification text in chat"
+	)
+	default Color damageNotificationColor()
 	{
-		return name();
+		return Color.CYAN;
 	}
 }
