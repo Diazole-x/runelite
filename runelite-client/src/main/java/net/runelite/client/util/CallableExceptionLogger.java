@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Tomas Slusny <slusnucky@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,16 +22,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.http.api.item;
+package net.runelite.client.util;
 
-import java.time.Instant;
-import lombok.Data;
+import java.util.concurrent.Callable;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
-public class ItemPrice
+@Slf4j
+@RequiredArgsConstructor
+public class CallableExceptionLogger<V> implements Callable<V>
 {
-	private int id;
-	private String name;
-	private int price;
-	private Instant time;
+	private final Callable<V> callable;
+
+	@Override
+	public V call() throws Exception
+	{
+		try
+		{
+			return callable.call();
+		}
+		catch (Throwable ex)
+		{
+			log.warn("Uncaught exception in callable {}", callable, ex);
+			throw ex;
+		}
+	}
+
+	public static <V> CallableExceptionLogger<V> wrap(Callable<V> callable)
+	{
+		return new CallableExceptionLogger<>(callable);
+	}
 }
